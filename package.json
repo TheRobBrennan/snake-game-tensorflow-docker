@@ -1,0 +1,26 @@
+{
+  "name": "snake-game-tensorflow-docker",
+  "version": "0.0.0",
+  "description": "Based off https://www.docker.com/blog/leveraging-docker-with-tensorflow/",
+  "homepage": "https://github.com/TheRobBrennan/snake-game-tensorflow-docker#readme",
+  "bugs": {
+    "url": "https://github.com/TheRobBrennan/snake-game-tensorflow-docker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheRobBrennan/snake-game-tensorflow-docker.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Rob Brennan <rob@sploosh.ai>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker build -t snake-game-tensorflow .",
+    "docker:run": "docker run -p 8080:80 --name snake-game-container snake-game-tensorflow",
+    "docker:stop": "docker stop snake-game-container",
+    "docker:remove": "docker rm snake-game-container",
+    "docker:clean": "npm run docker:stop && npm run docker:remove",
+    "docker:restart": "npm run docker:clean && npm run docker:run",
+    "docker:dev": "docker run -p 8080:80 -v $(pwd):/usr/share/nginx/html --name snake-game-container snake-game-tensorflow",
+    "start": "npm run docker:build && npm run docker:run"
+  }
+}
