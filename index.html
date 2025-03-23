@@ -10,10 +10,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Snake Game</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="game-container">
+        <h1 class="game-title">Snake Game</h1>
         <div class="top-bar">
             <div class="controls">
                 <label for="mode" class="label">Choose Mode:</label>
@@ -21,16 +25,34 @@
                     <option value="manual">Play Manually (Arrow Keys)</option>
                     <option value="model">AI Mode</option>
                 </select>
-                <button id="startGame" class="btn">Start Game</button>
-                <button id="restartGame" class="btn" style="display:none;">Restart Game</button>
+                <div class="button-group">
+                    <button id="startGame" class="btn">Start Game</button>
+                    <button id="restartGame" class="btn" style="display:none;">Restart Game</button>
+                </div>
             </div>
             <div class="scoreboard">
-                <h2>Score: <span id="score">0</span></h2>
-                <h2>High Score: <span id="highScore">0</span></h2>
-                <h2>Generation: <span id="genCount">0</span></h2>
+                <div class="score-item">
+                    <h2>Score: <span id="score">0</span></h2>
+                </div>
+                <div class="score-item">
+                    <h2>High Score: <span id="highScore">0</span></h2>
+                </div>
+                <div class="score-item">
+                    <h2>Generation: <span id="genCount">0</span></h2>
+                </div>
             </div>
         </div>
-        <canvas id="gameCanvas" width="800" height="800"></canvas>
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+        </div>
+        <div class="mobile-controls">
+            <button id="up-btn" class="mobile-btn">↑</button>
+            <div class="mobile-controls-row">
+                <button id="left-btn" class="mobile-btn">←</button>
+                <button id="right-btn" class="mobile-btn">→</button>
+            </div>
+            <button id="down-btn" class="mobile-btn">↓</button>
+        </div>
     </div>
     <script src="ai.js"></script>
     <script src="script.js"></script>
