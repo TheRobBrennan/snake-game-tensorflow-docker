@@ -16,50 +16,73 @@ This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allo
 
 ## Setup Instructions
 
-### Using Docker Compose
+### Using Docker Compose (Recommended)
 
-Bring up the application:
+This project uses Docker Compose for easy container management. The `docker-compose.yml` file defines two services:
+
+- `snake-game`: Production service running on port 8080
+- `snake-game-dev`: Development service with live code reloading on port 8081
 
 ```sh
-docker compose up -d 
+# Start the production service
+docker compose up -d
+
+# Start the development service with live code reloading
+docker compose --profile dev up -d snake-game-dev
+
+# View logs
+docker compose logs -f
+
+# Stop all services
+docker compose down
+
+# Clean up images and containers
+docker compose down --rmi local
 ```
 
 ### Using npm Scripts
 
-This project includes several npm scripts to make working with Docker easier:
+This project includes several npm scripts to make working with Docker Compose easier:
 
 ```sh
 # Build and start the application in one command
 npm start
 
-# Build the Docker image
+# Build the Docker images
 npm run docker:build
 
-# Run the Docker container
-npm run docker:run
+# Start the production service
+npm run docker:up
 
-# Stop the running container
-npm run docker:stop
+# Stop all services
+npm run docker:down
 
-# Remove the container
-npm run docker:remove
-
-# Stop and remove the container
-npm run docker:clean
-
-# Restart the container (stop, remove, and run)
+# Restart services
 npm run docker:restart
 
-# Run with a volume mount for development (changes reflect immediately)
-npm run docker:dev
+# View logs
+npm run docker:logs
+
+# Start the development service with live code reloading
+npm run docker:dev:up
+
+# Stop the development service
+npm run docker:dev:down
+
+# Clean up images and containers
+npm run docker:clean
 ```
 
 ### Accessing the Application
 
-Open your web browser and access the following URL:
+Open your web browser and access the appropriate URL:
 
 ```sh
+# Production service
 http://localhost:8080
+
+# Development service (with live code reloading)
+http://localhost:8081
 ```
 
 ## Testing GitHub Actions Locally
