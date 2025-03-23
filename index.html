@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>  -->
     <script src="tfjs.js"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Snake Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="game-container">
         <div class="top-bar">
@@ -26,9 +30,10 @@
                 <h2>Generation: <span id="genCount">0</span></h2>
             </div>
         </div>
-        <canvas id="gameCanvas"></canvas>
+        <canvas id="gameCanvas" width="800" height="800"></canvas>
     </div>
     <script src="ai.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

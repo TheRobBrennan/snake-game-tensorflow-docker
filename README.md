@@ -1,22 +1,12 @@
-## 🎯 AI Snake Game with Docker & TensorFlow.js
-
-1. [ README Content](#sample-readme-content)
-   - [Project Title](#project-title)
-   - [Project Structure](#project-structure)
-   - [Setup Instructions](#setup-instructions)
-   - [Configuration](#configuration)  
-2. [License](#license)
-3. [Contributing](#contributing)
+# 🎯 AI Snake Game with Docker & TensorFlow.js
 
 ## Overview
 
 This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allowing users to either play manually or let the AI control the snake.
 
-<img src="https://github.com/user-attachments/assets/6657078f-be16-4679-bb0a-565e6c8e1d0a" width="300">
-
+![ ](https://github.com/user-attachments/assets/6657078f-be16-4679-bb0a-565e6c8e1d0a)
 
 ## Project Structure
-
 
 - **index.html** - Main webpage hosting the game interface & loads library
 - **ai.js** - AI model integration and decision-making
@@ -26,39 +16,54 @@ This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allo
 
 ## Setup Instructions
 
+### Using Docker Compose
 
-### 1. Clone the repository
+Bring up the application:
 
- ```
- git clone https://github.com/dockersamples/snake-game-tensorflow-docker
- ```
-
-### 2. Navigate to the project directory:
-
-```
-cd snake-game-tensorflow-docker
-```
-
-
-### 3. Using Docker Compose
-
-Bring up the application
-
-```
+```sh
 docker compose up -d 
 ```
 
-### 4. Access the application 
+### Using npm Scripts
+
+This project includes several npm scripts to make working with Docker easier:
+
+```sh
+# Build and start the application in one command
+npm start
+
+# Build the Docker image
+npm run docker:build
+
+# Run the Docker container
+npm run docker:run
+
+# Stop the running container
+npm run docker:stop
+
+# Remove the container
+npm run docker:remove
+
+# Stop and remove the container
+npm run docker:clean
+
+# Restart the container (stop, remove, and run)
+npm run docker:restart
+
+# Run with a volume mount for development (changes reflect immediately)
+npm run docker:dev
+```
+
+### Accessing the Application
 
 Open your web browser and access the following URL:
 
-
-```
+```sh
 http://localhost:8080
 ```
 
-
 ## License
+
 This project is licensed under the [Apache 2.0 License](/LICENSE).
 
 ## Contributing
@@ -66,4 +71,3 @@ This project is licensed under the [Apache 2.0 License](/LICENSE).
 Since this project is intended to support a specific use case guide, contributions are limited to bug fixes or security issues. If you have a question, feel free to open an issue!
 
 If you have any questions, please contact `#docs` on the [Docker Community Slack](https://communityinviter.com/apps/dockercommunity/docker-community).
-
