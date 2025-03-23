@@ -16,13 +16,45 @@ This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allo
 
 ## Setup Instructions
 
-Bring up the application
+### Using Docker Compose
+
+Bring up the application:
 
 ```sh
 docker compose up -d 
 ```
 
-Access the application:
+### Using npm Scripts
+
+This project includes several npm scripts to make working with Docker easier:
+
+```sh
+# Build and start the application in one command
+npm start
+
+# Build the Docker image
+npm run docker:build
+
+# Run the Docker container
+npm run docker:run
+
+# Stop the running container
+npm run docker:stop
+
+# Remove the container
+npm run docker:remove
+
+# Stop and remove the container
+npm run docker:clean
+
+# Restart the container (stop, remove, and run)
+npm run docker:restart
+
+# Run with a volume mount for development (changes reflect immediately)
+npm run docker:dev
+```
+
+### Accessing the Application
 
 Open your web browser and access the following URL:
 
