@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "author": "Rob Brennan <rob@sploosh.ai>",
   "scripts": {
-    "docker:build": "docker compose build",
+    "docker:build": "npm run generate-commit-info && docker compose build",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:restart": "docker compose restart",
