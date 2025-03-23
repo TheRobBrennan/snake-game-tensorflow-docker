@@ -1,0 +1,27 @@
+# Snake Game with TensorFlow.js Docker Compose Configuration
+
+services:
+  snake-game:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: snake-game-tensorflow
+    container_name: snake-game-container
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # Development service with volume mounting for live code changes
+  snake-game-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: snake-game-tensorflow
+    container_name: snake-game-dev-container
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/usr/share/nginx/html
+    restart: unless-stopped
+    profiles:
+      - dev
