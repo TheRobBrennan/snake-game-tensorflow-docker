@@ -1,6 +1,6 @@
 {
   "name": "snake-game-tensorflow-docker",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Based off https://www.docker.com/blog/leveraging-docker-with-tensorflow/",
   "homepage": "https://github.com/TheRobBrennan/snake-game-tensorflow-docker#readme",
   "bugs": {
