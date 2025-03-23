@@ -85,6 +85,25 @@ http://localhost:8080
 http://localhost:8081
 ```
 
+## Version Footer
+
+The application includes a version footer that displays important information about the current build:
+
+- **Application Name and Version**: Shows the application name and version from package.json
+- **Commit Information**: Displays the latest commit hash (clickable, links to GitHub), branch name, and commit date
+- **GitHub Repository**: Includes a link to the project's GitHub repository
+
+This information is automatically updated during the build process through the following components:
+
+- `generate-commit-info.js`: A Node.js script that extracts the latest commit information and generates JSON data
+- `version-info.js`: A JavaScript module that fetches and displays the version information in the footer
+
+The version footer is particularly useful for:
+
+- Identifying which version of the application is currently running
+- Tracking the exact commit that was deployed
+- Quickly accessing the GitHub repository for more information
+
 ## Testing GitHub Actions Locally
 
 We recommend using [act](https://github.com/nektos/act) to test GitHub Actions workflows locally before pushing changes if you are developing on a Mac.
