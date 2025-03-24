@@ -1,0 +1,322 @@
+/* Base styles */
+:root {
+    --primary-color: #6200ea;
+    --primary-dark: #3700b3;
+    --background-color: #f4f4f9;
+    --text-color: #333;
+    --border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 16px;
+    overflow-x: hidden;
+}
+
+.game-container {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.game-title {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+/* Game controls and scoreboard */
+.top-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.dropdown,
+.btn,
+.file-input {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.dropdown {
+    background-color: #fff;
+    color: var(--text-color);
+    width: 100%;
+    max-width: 300px;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    min-width: 120px;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.file-input {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--text-color);
+}
+
+.scoreboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+    background-color: #f0f0f7;
+    border-radius: var(--border-radius);
+    padding: 8px;
+    flex-wrap: nowrap;
+    max-width: 100%;
+}
+
+.score-item {
+    flex: 1;
+    min-width: 70px;
+    max-width: 33.33%;
+    text-align: center;
+    padding: 0 2px;
+}
+
+.scoreboard h2 {
+    font-size: 14px;
+    margin: 0;
+    color: var(--primary-color);
+    padding: 5px 2px 2px;
+    white-space: nowrap;
+}
+
+.score-value {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-color);
+    padding-top: 2px;
+}
+
+/* Canvas and game area */
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 20px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+canvas {
+    border: 3px solid var(--primary-color);
+    background-color: #fff;
+    display: block;
+    border-radius: var(--border-radius);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile controls */
+.mobile-controls {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.mobile-controls-row {
+    display: flex;
+    gap: 20px;
+}
+
+.mobile-btn {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.mobile-btn:active {
+    background-color: var(--primary-dark);
+    transform: scale(0.95);
+}
+
+/* Version footer */
+.version-footer {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+.version-footer span {
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.app-name {
+    font-weight: bold;
+}
+
+.version-number {
+    background-color: rgba(98, 0, 234, 0.1);
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: var(--primary-color);
+}
+
+.version-footer span:hover {
+    color: var(--primary-color);
+    cursor: default;
+}
+
+.github-link {
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.github-link:hover {
+    color: var(--primary-color);
+}
+
+.github-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.commit-link {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+    transition: color 0.3s ease;
+}
+
+.commit-link:hover {
+    color: var(--primary-color);
+}
+
+/* Media queries for responsive design */
+@media (min-width: 768px) {
+    .top-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .label {
+        margin-right: 10px;
+    }
+
+    .scoreboard {
+        min-width: 250px;
+        justify-content: space-around;
+        padding: 10px;
+    }
+
+    .score-item {
+        min-width: 80px;
+        padding: 0 5px;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        padding: 10px;
+    }
+
+    .game-container {
+        padding: 15px 10px;
+    }
+
+    .game-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    canvas {
+        max-height: 350px;
+    }
+}

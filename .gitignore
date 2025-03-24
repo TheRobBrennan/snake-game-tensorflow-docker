@@ -9,7 +9,7 @@ version.js
 *.log
 
 # Build artifacts
-dist/
+# dist/ - commented out for Vercel deployment
 build/
 
 # Environment variables
