@@ -22,7 +22,11 @@
     "docker:dev:down": "docker compose --profile dev down",
     "docker:clean": "docker compose down --rmi local",
     "generate-commit-info": "node generate-commit-info.js",
-    "prebuild": "npm run generate-commit-info",
+    "build": "npm run generate-commit-info && mkdir -p dist && cp -r *.html *.js *.css commit-info.json assets dist/ && cp -r public/* dist/",
+    "vercel:dev": "npx vercel dev",
+    "debug-build": "node debug-build.js",
+    "vercel:preview": "npx vercel",
+    "deploy": "npm run build && npx vercel --prod",
     "start": "npm run generate-commit-info && npm run docker:build && npm run docker:up",
     "test": "npm run test:workflows",
     "test:workflows": "chmod +x .github/test-workflows.sh && .github/test-workflows.sh",
@@ -33,5 +37,9 @@
     "test:workflows:semantic:invalid": "act pull_request -e .github/test-data/pr-events/invalid.json -W .github/workflows/semantic-pr-check.yml",
     "test:workflows:version": "act workflow_dispatch -W .github/workflows/version-bump.yml --container-architecture linux/amd64",
     "test:workflows:merge": "act push -e .github/test-data/pr-events/merge.json -W .github/workflows/main-merge.yml --container-architecture linux/amd64"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4",
+    "vercel": "^41.4.1"
   }
 }

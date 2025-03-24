@@ -4,7 +4,13 @@
 
 This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allowing users to either play manually or let the AI control the snake.
 
-![ ](./assets/screenshot.png)
+## Live Demo
+
+**[Play the game now on Vercel!](https://snake-game-tensorflow-docker.vercel.app)**
+
+Try out the AI-powered Snake game without any installation. The live demo is deployed on Vercel and includes all features of the local version.
+
+![ ](./public/assets/screenshot.png)
 
 ![ ](https://github.com/user-attachments/assets/6657078f-be16-4679-bb0a-565e6c8e1d0a)
 
@@ -105,6 +111,42 @@ The version footer is particularly useful for:
 - Identifying which version of the application is currently running
 - Tracking the exact commit that was deployed
 - Quickly accessing the GitHub repository for more information
+
+## Deploying to Vercel
+
+This application is deployed to Vercel at [https://snake-game-tensorflow-docker.vercel.app](https://snake-game-tensorflow-docker.vercel.app). The project includes Vercel-specific configuration to ensure the version footer works correctly in the Vercel environment.
+
+### One-Click Deployment
+
+You can deploy this application to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTheRobBrennan%2Fsnake-game-tensorflow-docker)
+
+### Manual Deployment
+
+To deploy manually:
+
+1. Fork or clone this repository
+2. Install the Vercel CLI: `npm install -g vercel`
+3. Login to Vercel: `vercel login`
+4. Run the deploy script: `npm run deploy`
+
+The deploy script will:
+
+1. Generate the commit info for the version footer
+2. Build the project into the `dist` directory
+3. Deploy the application to Vercel
+
+### Project Structure for Vercel
+
+The project uses the following configuration for Vercel deployment:
+
+- `dist/`: Build output directory (generated during build, kept in .gitignore)
+- `public/`: Static assets that don't need processing
+  - `assets/`: Images and other media files
+- `vercel.json`: Vercel-specific configuration with:
+  - `buildCommand: null` - Prevents Vercel from running a build command (we build locally)
+  - `outputDirectory: "dist"` - Tells Vercel to serve files from the dist directory
 
 ## Testing GitHub Actions Locally
 
