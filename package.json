@@ -22,7 +22,7 @@
     "docker:dev:down": "docker compose --profile dev down",
     "docker:clean": "docker compose down --rmi local",
     "generate-commit-info": "node generate-commit-info.js",
-    "build": "npm run generate-commit-info && mkdir -p dist && cp -r *.html *.js *.css assets dist/ && cp -r public/* dist/",
+    "build": "npm run generate-commit-info",
     "vercel:dev": "npx vercel dev",
     "vercel:preview": "npx vercel",
     "start": "npm run generate-commit-info && npm run docker:build && npm run docker:up",
