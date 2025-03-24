@@ -26,7 +26,7 @@
     "vercel:dev": "npx vercel dev",
     "debug-build": "node debug-build.js",
     "vercel:preview": "npx vercel",
-    "deploy": "npm run build && cd dist && npx vercel --prod --scope splooshai --name snake-game-tensorflow-docker",
+    "deploy": "npm run build && npx vercel --prod",
     "start": "npm run generate-commit-info && npm run docker:build && npm run docker:up",
     "test": "npm run test:workflows",
     "test:workflows": "chmod +x .github/test-workflows.sh && .github/test-workflows.sh",
