@@ -148,6 +148,20 @@ The project uses the following configuration for Vercel deployment:
   - `buildCommand: null` - Prevents Vercel from running a build command (we build locally)
   - `outputDirectory: "dist"` - Tells Vercel to serve files from the dist directory
 
+### Automated Deployment Checks
+
+This project includes GitHub Actions workflows that automatically verify Vercel deployments:
+
+1. **Pull Request Deployments**: When a PR is opened or updated, the workflow waits for the Vercel preview deployment to complete and adds a comment with the preview URL to the PR.
+
+2. **Production Deployments**: After merging to the main branch, the workflow verifies that the production deployment to Vercel completes successfully.
+
+These checks ensure that:
+
+- Every PR has a working preview deployment before it can be merged
+- The main branch is always successfully deployed to production
+- Team members have easy access to preview URLs for testing
+
 ## Testing GitHub Actions Locally
 
 We recommend using [act](https://github.com/nektos/act) to test GitHub Actions workflows locally before pushing changes if you are developing on a Mac.

@@ -161,3 +161,75 @@ jobs:
           
           echo "Timeout waiting for checks!"
           exit 1
+          
+  verify-vercel-deployment:
+    needs: merge-pr
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      statuses: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Wait for Vercel Production Deployment
+        # Skip this step when running locally with act (which sets GITHUB_ACTOR to nektos/act)
+        if: ${{ github.actor != 'nektos/act' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Waiting for Vercel production deployment to complete..."
+          # Set timeout to 10 minutes (600 seconds)
+          timeout=600
+          start_time=$(date +%s)
+          
+          # Get the latest commit hash
+          COMMIT_HASH=$(git rev-parse HEAD)
+          echo "Checking deployment status for commit: $COMMIT_HASH"
+          
+          while [ $timeout -gt 0 ]; do
+            # Check deployment status using GitHub API
+            DEPLOYMENTS=$(gh api repos/${{ github.repository }}/deployments --jq '.[] | select(.environment == "Production") | {id: .id, sha: .sha, status: .statuses_url}')
+            echo "Latest deployments:"
+            echo "$DEPLOYMENTS"
+            
+            # Find deployment for current commit
+            DEPLOYMENT_ID=$(echo "$DEPLOYMENTS" | jq -r "select(.sha == \"$COMMIT_HASH\") | .id")
+            
+            if [[ ! -z "$DEPLOYMENT_ID" ]]; then
+              echo "Found deployment ID: $DEPLOYMENT_ID"
+              
+              # Get deployment status
+              STATUS_URL=$(echo "$DEPLOYMENTS" | jq -r "select(.sha == \"$COMMIT_HASH\") | .status")
+              DEPLOYMENT_STATUS=$(gh api $STATUS_URL --jq '.[] | {state: .state, description: .description, url: .target_url}' | head -n 1)
+              
+              echo "Deployment status: $DEPLOYMENT_STATUS"
+              
+              STATE=$(echo "$DEPLOYMENT_STATUS" | jq -r '.state')
+              TARGET_URL=$(echo "$DEPLOYMENT_STATUS" | jq -r '.url')
+              
+              if [[ "$STATE" == "success" ]]; then
+                echo "✅ Vercel production deployment completed successfully!"
+                echo "🔗 Production URL: $TARGET_URL"
+                exit 0
+              elif [[ "$STATE" == "failure" || "$STATE" == "error" ]]; then
+                echo "❌ Vercel production deployment failed"
+                exit 1
+              fi
+            fi
+            
+            # Calculate remaining time
+            current_time=$(date +%s)
+            elapsed=$((current_time - start_time))
+            timeout=$((600 - elapsed))
+            
+            if [ $timeout -le 0 ]; then
+              echo "⏱️ Timeout waiting for Vercel production deployment after 10 minutes"
+              exit 1
+            fi
+            
+            echo "⏳ Waiting for Vercel production deployment... ($timeout seconds remaining)"
+            sleep 15
+          done

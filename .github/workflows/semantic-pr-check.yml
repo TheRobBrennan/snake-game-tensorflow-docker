@@ -63,27 +63,57 @@ jobs:
             fi
           fi
 
-      # - name: Wait for Vercel Preview
-      #   if: ${{ !env.ACT }}  # Only run in GitHub Actions, not in local act
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
-      #   run: |
-      #     echo "Waiting for Vercel deployment to complete..."
-      #     while true; do
-      #       # Debug output to see actual states
-      #       gh pr checks ${{ github.event.pull_request.number }} --json name,state,description | jq -r '.[] | select(.name=="Vercel")'
-      #       
-      #       STATUS=$(gh pr checks ${{ github.event.pull_request.number }} --json name,state,description | jq -r '.[] | select(.name=="Vercel") | .description')
-      #       if [[ "$STATUS" == *"Deployment has completed"* ]]; then
-      #         echo "✅ Vercel deployment completed successfully"
-      #         break
-      #       elif [[ "$STATUS" == *"failed"* ]]; then
-      #         echo "❌ Vercel deployment failed"
-      #         exit 1
-      #       fi
-      #       echo "⏳ Waiting for Vercel deployment... (checking again in 10s)"
-      #       sleep 10
-      #     done
+      - name: Wait for Vercel Preview
+        # Skip this step when running locally with act (which sets GITHUB_ACTOR to nektos/act)
+        if: ${{ github.actor != 'nektos/act' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Waiting for Vercel deployment to complete..."
+          # Set timeout to 5 minutes (300 seconds)
+          timeout=300
+          start_time=$(date +%s)
+          
+          while [ $timeout -gt 0 ]; do
+            # Debug output to see actual states
+            gh pr checks ${{ github.event.pull_request.number }} --json name,state,description | jq -r '.[] | select(.name | contains("Vercel"))'
+            
+            # Look for both 'Vercel' and 'vercel' in check names (case insensitive)
+            STATUS=$(gh pr checks ${{ github.event.pull_request.number }} --json name,state,description | jq -r '.[] | select(.name | ascii_downcase | contains("vercel")) | .description')
+            STATE=$(gh pr checks ${{ github.event.pull_request.number }} --json name,state,description | jq -r '.[] | select(.name | ascii_downcase | contains("vercel")) | .state')
+            
+            if [[ "$STATUS" == *"Deployment has completed"* || "$STATE" == "SUCCESS" ]]; then
+              echo "✅ Vercel deployment completed successfully"
+              # Get the deployment URL
+              DEPLOYMENT_URL=$(gh pr view ${{ github.event.pull_request.number }} --json comments --jq '.comments[].body' | grep -o 'https://.*vercel.app' | head -n 1)
+              if [[ ! -z "$DEPLOYMENT_URL" ]]; then
+                echo "🔗 Preview URL: $DEPLOYMENT_URL"
+                # Add a comment with the preview URL if it doesn't exist yet
+                if ! gh pr view ${{ github.event.pull_request.number }} --json comments --jq '.comments[].body' | grep -q "Preview URL"; then
+                  gh pr comment ${{ github.event.pull_request.number }} --body "## Vercel Deployment\n\n✅ Successfully deployed to Vercel!\n\n🔗 **Preview URL**: [$DEPLOYMENT_URL]($DEPLOYMENT_URL)"
+                fi
+              fi
+              break
+            elif [[ "$STATUS" == *"failed"* || "$STATE" == "FAILURE" ]]; then
+              echo "❌ Vercel deployment failed"
+              gh pr comment ${{ github.event.pull_request.number }} --body "## Vercel Deployment\n\n❌ Deployment to Vercel failed. Please check the Vercel logs for more information."
+              exit 1
+            fi
+            
+            # Calculate remaining time
+            current_time=$(date +%s)
+            elapsed=$((current_time - start_time))
+            timeout=$((300 - elapsed))
+            
+            if [ $timeout -le 0 ]; then
+              echo "⏱️ Timeout waiting for Vercel deployment after 5 minutes"
+              gh pr comment ${{ github.event.pull_request.number }} --body "## Vercel Deployment\n\n⏱️ Timed out waiting for Vercel deployment after 5 minutes. The deployment might still be in progress."
+              exit 1
+            fi
+            
+            echo "⏳ Waiting for Vercel deployment... ($timeout seconds remaining)"
+            sleep 10
+          done
 
       - name: Check Breaking Change Format
         if: success()
