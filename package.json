@@ -23,7 +23,7 @@
     "docker:clean": "docker compose down --rmi local",
     "generate-commit-info": "node generate-commit-info.js",
     "prebuild": "npm run generate-commit-info",
-    "build": "npm run generate-commit-info && mkdir -p public && cp -r *.html *.js *.css commit-info.json public/",
+    "build": "npm run generate-commit-info && mkdir -p public && cp -r *.html *.js *.css commit-info.json public/ && cp -r assets public/",
     "dev": "npm run generate-commit-info && npx serve",
     "vercel-build": "npm run build",
     "vercel:dev": "npx vercel dev",
