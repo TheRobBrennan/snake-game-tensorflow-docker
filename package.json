@@ -24,7 +24,7 @@
     "generate-commit-info": "node generate-commit-info.js",
     "build": "mkdir -p dist && cp -r *.html *.js *.css assets dist/",
     "dev": "npm run generate-commit-info && npx serve dist",
-    "vercel-build": "npm run build",
+    "vercel-build": "mkdir -p .vercel/output/static && cp -r *.html *.js *.css assets .vercel/output/static/",
     "vercel:dev": "npx vercel dev",
     "vercel:preview": "npx vercel",
     "start": "npm run generate-commit-info && npm run docker:build && npm run docker:up",
