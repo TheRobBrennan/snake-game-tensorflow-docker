@@ -4,6 +4,12 @@
 
 This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allowing users to either play manually or let the AI control the snake.
 
+## Live Demo
+
+**[Play the game now on Vercel!](https://snake-game-tensorflow-docker.vercel.app)**
+
+Try out the AI-powered Snake game without any installation. The live demo is deployed on Vercel and includes all features of the local version.
+
 ![ ](./public/assets/screenshot.png)
 
 ![ ](https://github.com/user-attachments/assets/6657078f-be16-4679-bb0a-565e6c8e1d0a)
@@ -108,7 +114,7 @@ The version footer is particularly useful for:
 
 ## Deploying to Vercel
 
-This application can be deployed to Vercel for easy hosting and sharing. The project includes Vercel-specific configuration to ensure the version footer works correctly in the Vercel environment.
+This application is deployed to Vercel at [https://snake-game-tensorflow-docker.vercel.app](https://snake-game-tensorflow-docker.vercel.app). The project includes Vercel-specific configuration to ensure the version footer works correctly in the Vercel environment.
 
 ### One-Click Deployment
 
@@ -123,28 +129,24 @@ To deploy manually:
 1. Fork or clone this repository
 2. Install the Vercel CLI: `npm install -g vercel`
 3. Login to Vercel: `vercel login`
-4. Deploy: `vercel`
+4. Run the deploy script: `npm run deploy`
 
-### Local Development
+The deploy script will:
 
-To test the Vercel build locally:
-
-```sh
-# Install dependencies
-npm install
-
-# Generate commit info and start local server
-npm run dev
-```
+1. Generate the commit info for the version footer
+2. Build the project into the `dist` directory
+3. Deploy the application to Vercel
 
 ### Project Structure for Vercel
 
-The project uses the following directory structure for Vercel deployment:
+The project uses the following configuration for Vercel deployment:
 
-- `dist/`: Build output directory (generated during build)
+- `dist/`: Build output directory (generated during build, kept in .gitignore)
 - `public/`: Static assets that don't need processing
   - `assets/`: Images and other media files
-- `vercel.json`: Vercel-specific configuration
+- `vercel.json`: Vercel-specific configuration with:
+  - `buildCommand: null` - Prevents Vercel from running a build command (we build locally)
+  - `outputDirectory: "dist"` - Tells Vercel to serve files from the dist directory
 
 ## Testing GitHub Actions Locally
 
