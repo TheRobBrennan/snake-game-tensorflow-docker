@@ -24,17 +24,40 @@ function execGitCommand(command) {
     }
 }
 
-// Get git information
-const commitHash = execGitCommand('git rev-parse --short HEAD');
-// Get the commit date in a format that includes the original time zone
-// Use --date=iso-local to get the date in the local time zone of the commit
-const commitDate = execGitCommand('git log -1 --format=%cd --date=iso-local');
-const branch = execGitCommand('git rev-parse --abbrev-ref HEAD');
+// Function to get environment variables for Vercel deployment
+function getVercelEnv() {
+    const isVercel = process.env.VERCEL === '1';
+    if (!isVercel) return null;
+
+    return {
+        commitHash: process.env.VERCEL_GIT_COMMIT_SHA ? process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7) : null,
+        commitDate: process.env.VERCEL_GIT_COMMIT_MESSAGE ? new Date().toISOString() : null,
+        branch: process.env.VERCEL_GIT_COMMIT_REF || null
+    };
+}
+
+// Check if we're in Vercel environment
+const vercelEnv = getVercelEnv();
+
+// Get git information - use Vercel env vars if available
+let commitHash, commitDate, branch;
+
+if (vercelEnv) {
+    console.log('Running in Vercel environment, using Vercel environment variables');
+    commitHash = vercelEnv.commitHash;
+    commitDate = vercelEnv.commitDate;
+    branch = vercelEnv.branch;
+} else {
+    commitHash = execGitCommand('git rev-parse --short HEAD');
+    // Get the commit date in a format that includes the original time zone
+    // Use --date=iso-local to get the date in the local time zone of the commit
+    commitDate = execGitCommand('git log -1 --format=%cd --date=iso-local');
+    branch = execGitCommand('git rev-parse --abbrev-ref HEAD');
+}
 
 // Create commit info object
 const commitInfo = {
     version: packageJson.version,
-
     hash: commitHash || 'unknown',
     date: commitDate || new Date().toISOString(),
     branch: branch || 'unknown'

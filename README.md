@@ -4,7 +4,7 @@
 
 This project demonstrates an AI-powered Snake game with TensorFlow.js. Game allowing users to either play manually or let the AI control the snake.
 
-![ ](./assets/screenshot.png)
+![ ](./public/assets/screenshot.png)
 
 ![ ](https://github.com/user-attachments/assets/6657078f-be16-4679-bb0a-565e6c8e1d0a)
 
@@ -105,6 +105,46 @@ The version footer is particularly useful for:
 - Identifying which version of the application is currently running
 - Tracking the exact commit that was deployed
 - Quickly accessing the GitHub repository for more information
+
+## Deploying to Vercel
+
+This application can be deployed to Vercel for easy hosting and sharing. The project includes Vercel-specific configuration to ensure the version footer works correctly in the Vercel environment.
+
+### One-Click Deployment
+
+You can deploy this application to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTheRobBrennan%2Fsnake-game-tensorflow-docker)
+
+### Manual Deployment
+
+To deploy manually:
+
+1. Fork or clone this repository
+2. Install the Vercel CLI: `npm install -g vercel`
+3. Login to Vercel: `vercel login`
+4. Deploy: `vercel`
+
+### Local Development
+
+To test the Vercel build locally:
+
+```sh
+# Install dependencies
+npm install
+
+# Generate commit info and start local server
+npm run dev
+```
+
+### Project Structure for Vercel
+
+The project uses the following directory structure for Vercel deployment:
+
+- `dist/`: Build output directory (generated during build)
+- `public/`: Static assets that don't need processing
+  - `assets/`: Images and other media files
+- `vercel.json`: Vercel-specific configuration
 
 ## Testing GitHub Actions Locally
 
